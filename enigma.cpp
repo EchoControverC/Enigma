@@ -548,7 +548,7 @@ void _encrypt() {
 		cout << endl;
 
 		for (int i = 0; i < message.length(); i++) {
-			cout << messageOut[i];
+			cout << messageOut[i] * 100;
 			
 				if (i != message.length() - 1) {
 				 cout << " - ";
