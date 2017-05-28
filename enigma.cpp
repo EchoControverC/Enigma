@@ -277,8 +277,6 @@ void  _write() {
 
 	cout << "File Write Completed." << endl;
 
-
-
 	return;
 
 }
@@ -505,9 +503,9 @@ void _encrypt() {
 
 		//RSA encryption routine
 
-		int p = 42379, q = 19477, r = 6875, s = 319096835;											//p and q  are two prime numbers of 5 digits.  In real practice they're 100 digit or 300 digit long 
+		double p = 42379, q = 19477, r = 6875, s = 319096835;											//p and q  are two prime numbers of 5 digits.  In real practice they're 100 digit or 300 digit long 
 
-		int alpha = p * q, phi = (p - 1) * (q - 1);
+		double alpha = p * q, phi = (p - 1) * (q - 1);
 
 
 		cout << "alpha is.. " << alpha << endl;
@@ -598,7 +596,7 @@ void _decrypt() {
 
 	if (getline(cin, message)) {
 
-		cout << "\nmessage accepted - encrypting\n" << endl;
+		cout << "\nmessage accepted - Decrypting\n" << endl;
 		cout << "Your message was : " << message << endl;
 
 	} else {
@@ -619,8 +617,9 @@ void _decrypt() {
 
 void _encode() {
 
+	int ret = 0;
 
-
+	_flushbuffer;
 	cout << "Someday I'll be encoding stuff!\n" << endl;
 
 
@@ -628,7 +627,15 @@ void _encode() {
 	_write();
 
 
-
+	cout << "Return to menu [1] or exit[any]" << endl;
+	if (cin >> ret ) {				//Have to do work here  - all values seem to simply return with the sys('pause')
+		_instructions;
+		
+	}
+	else {
+		cout << "Goodbye.\n" << endl;
+		
+	}
 
 
 
