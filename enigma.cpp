@@ -1,21 +1,21 @@
-	/*
-	This is the  A.S.K. organization's first cooperative coding project 2/13/17
-	The purpose of this project will be to encrypt and decrypt messages sent between
-	two parties. Input will be recorded, checked, and encoded; ciphers will be created/deployed;
-	information read from and written to .txt files.
-	Proto_1 - in progress
-	-echo
-	*/
+/*
+This is the  A.S.K. organization's first cooperative coding project 2/13/17
+The purpose of this project will be to encrypt and decrypt messages sent between
+two parties. Input will be recorded, checked, and encoded; ciphers will be created/deployed;
+information read from and written to .txt files.
+Proto_1 - in progress
+-echo
+*/
 
-	//Start with header files
+//Start with header files
 #include<iostream>			//Allows us to get user input.
 #include<fstream>			//Allows us to read/write to files.
 #include<string>			//We may possibly need strings...  Haven't decided yet.
 #include<cmath>				//In case we want to make complex ciphers based on math.
 #include<sstream>
 
-	// Global ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	int x = 0;
+// Global ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+int x = 0;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //  Functions ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -85,21 +85,21 @@ void _instructions() {
 //	}
 
 /* void _read() {
-	system("CLS");
-	string line;
-	ifstream myfile("0.txt");
-	cout << "File Read Initiated.\n\n" << endl;
+system("CLS");
+string line;
+ifstream myfile("0.txt");
+cout << "File Read Initiated.\n\n" << endl;
 
-	if (myfile.is_open()) {						//Perform the actions inside of this if block if the file is open
-		while (getline(myfile, line)) {			//Action in "if" block - while there is another line in "myfile"
-			cout << line << '\n';				//Print it to the screen
-		}
-		myfile.close();							//After you reach the last line in the .txt file (a.k.a.  "myfile") - close file.
+if (myfile.is_open()) {						//Perform the actions inside of this if block if the file is open
+while (getline(myfile, line)) {			//Action in "if" block - while there is another line in "myfile"
+cout << line << '\n';				//Print it to the screen
+}
+myfile.close();							//After you reach the last line in the .txt file (a.k.a.  "myfile") - close file.
 
-	}
-	else { cout << "Unable to open file."; }	//If file doesn't exist or can't be opened, print to screen.
+}
+else { cout << "Unable to open file."; }	//If file doesn't exist or can't be opened, print to screen.
 
-	return;
+return;
 }
 */
 
@@ -118,14 +118,14 @@ void _encrypt() {
 	system("CLS");
 	string message;
 	int userin = 0;
-	char messageArray[100];
-	double messageOut[100];
+	char messageArray[256];
+	double messageOut[256];
 
 	_flushbuffer();
 
 	cout << "Please type the message you would like to be encrypted on the next line and press [enter] when you're done.\n"
 		<< ">  ";
-	getline(cin,message);
+	getline(cin, message);
 
 	_flushbuffer();
 
@@ -223,7 +223,7 @@ void _encrypt() {
 				messageOut[i] = .26;
 			}
 			else if (messageArray[i] == ' ') {
-				messageOut[i] = .00;
+				messageOut[i] = .51;
 			}
 			else {
 				cout << "character unrecognized" << endl;
@@ -246,14 +246,14 @@ void _encrypt() {
 
 		for (int i = 0; i < message.length(); i++) {
 			cout << messageOut[i] * 100;
-			
+
 			// I commented out the next if statement because I wanted to make a single
 			// numerical string to be encrypted.  Why? So that i could decrypt what I'd
 			// just encrypted and the dash in between the characters messed that up.
 			// However, thiis is good debugging code so feel free to uncomment it
 			/*			if (i != message.length() - 1) {
 
-				cout << " - ";
+			cout << " - ";
 			}*/
 		}
 		cout << endl;
@@ -264,8 +264,8 @@ void _encrypt() {
 		system("CLS");
 		cout << "Apologies, dear sir, returning to message capture.\n\n" << endl;
 		_encrypt();				//This is technically recursive... Since we're in the encrypt function while it's calling another version of the encrypt function.
-							//Once one terminates properly they will all recursively terminate. This can be a vulnerability though - infinite loop if someone keeps selecting 0.
-							// can be solved by ending program as below - no option to retry. Draconian programming? Perhaps. Necessary? Possibly.
+								//Once one terminates properly they will all recursively terminate. This can be a vulnerability though - infinite loop if someone keeps selecting 0.
+								// can be solved by ending program as below - no option to retry. Draconian programming? Perhaps. Necessary? Possibly.
 	}
 	else {
 		cout << "Invalid entry" << endl;
@@ -276,167 +276,142 @@ void _encrypt() {
 }
 
 void _decrypt() {
-	system("CLS");
-	string message;
-	int userin = 0;
-	char messageArray[100];
-	char messageOut[100];
 
+	char encryptedMessage[256] = { 0 };
+	char messageOut[256] = { 0 };
+	string message;
 	_flushbuffer();
 
-	cout << "Please type the message you would like to be decrypted on the next line and press [enter] when you're done.\n"
-		<< ">  ";
+	char question1[] = "Please type the message you would like to be decrypted on the next line and press [enter] when you're done. ";
+	string question2 = "What's the airspeed velocity of an African swallow? ";
+	cout << question1;
+	cin >> message;
+	cout << question2;
+	cin >> encryptedMessage;
+	cout << "Righty-o, we had better brush up on our Monty Python then." << endl;
+	cout << "          (\   /)" << endl;
+	cout << "         (^  .  ^)" << endl;
+	cout << "            V V     " << endl;
+	cout << "        (||)  (||)" << endl;
+	cout << "                  " << endl;
+	cout << endl;
+	cout << "So this is your original message: " << message << endl;
+	cout << endl;
+	cout << "and this is your encrypted message: " << endl;
 
-	// The following code is my first pass at the guts of the 'decryption' function.
-	// It is not perfect.  For example, it's currently mistaking 'u' for 'l' and adding n's.
-	// Also, it's not considering spaces which makes the message hard to read
-	// but it's good for a first pass.  going to sleep now..
-	if (getline(cin, message)) {
-		cout << "\nmessage accepted - Decrypting\n" << endl;
-		cout << "Your message was : " << message << endl;
+	for (int i = 0; i < message.length() - 1; i += 2) {
 
-		for (int i = 0; i < message.length(); i++) {
-						
-			if (message[i] == '4' && message[i+1]=='1') {
-				messageOut[i] = 'a';
-				cout << messageOut[i];
-			}
-			else if (message[i] == '4' && message[i + 1] == '2') {
-				messageOut[i] = 'b';
-				cout << messageOut[i];
+		if (message[i] == '4' && message[i + 1] == '1') {
+			messageOut[i] = 'a';
+		}
+		else if (message[i] == '4' && message[i + 1] == '2') {
+			messageOut[i] = 'b';
+		}
+		else if (message[i] == '4' && message[i + 1] == '3') {
+			messageOut[i] = 'c';
 
-			}
-			else if (message[i] == '4' && message[i + 1] == '3') {
-				messageOut[i] = 'c';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '4' && message[i + 1] == '4') {
+			messageOut[i] = 'd';
 
-			}
-			else if (message[i] == '4' && message[i + 1] == '4') {
-				messageOut[i] = 'd';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '4' && message[i + 1] == '5') {
+			messageOut[i] = 'e';
 
-			}
-			else if (message[i] == '4' && message[i + 1] == '5') {
-				messageOut[i] = 'e';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '4' && message[i + 1] == '6') {
+			messageOut[i] = 'f';
 
-			}
-			else if (message[i] == '4' && message[i + 1] == '6') {
-				messageOut[i] = 'f';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '4' && message[i + 1] == '7') {
+			messageOut[i] = 'g';
 
-			}
-			else if (message[i] == '4' && message[i + 1] == '7') {
-				messageOut[i] = 'g';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '7') {
+			messageOut[i] = 'h';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '7') {
-				messageOut[i] = 'h';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '8') {
+			messageOut[i] = 'i';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '8') {
-				messageOut[i] = 'i';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '0') {
+			messageOut[i] = 'j';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '0') {
-				messageOut[i] = 'j';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '1') {
+			messageOut[i] = 'k';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '1') {
-				messageOut[i] = 'k';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '2') {
+			messageOut[i] = 'l';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '2') {
-				messageOut[i] = 'l';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '3') {
+			messageOut[i] = 'm';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '3') {
-				messageOut[i] = 'm';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '4') {
+			messageOut[i] = 'n';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '4') {
-				messageOut[i] = 'n';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '5') {
+			messageOut[i] = 'o';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '5') {
-				messageOut[i] = 'o';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '6') {
+			messageOut[i] = 'p';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '6') {
-				messageOut[i] = 'p';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '7') {
+			messageOut[i] = 'q';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '7') {
-				messageOut[i] = 'q';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '8') {
+			messageOut[i] = 'r';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '8') {
-				messageOut[i] = 'r';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '1' && message[i + 1] == '9') {
+			messageOut[i] = 's';
 
-			}
-			else if (message[i] == '1' && message[i + 1] == '9') {
-				messageOut[i] = 's';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '0') {
+			messageOut[i] = 't';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '0') {
-				messageOut[i] = 't';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '1') {
+			messageOut[i] = 'u';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '1') {
-				messageOut[i] = 'u';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '2') {
+			messageOut[i] = 'v';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '2') {
-				messageOut[i] = 'v';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '3') {
+			messageOut[i] = 'w';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '3') {
-				messageOut[i] = 'w';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '4') {
+			messageOut[i] = 'x';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '4') {
-				messageOut[i] = 'x';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '5') {
+			messageOut[i] = 'y';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '5') {
-				messageOut[i] = 'y';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '2' && message[i + 1] == '6') {
+			messageOut[i] = 'z';
 
-			}
-			else if (message[i] == '2' && message[i + 1] == '6') {
-				messageOut[i] = 'z';
-				cout << messageOut[i];
+		}
+		else if (message[i] == '5' && message[i + 1] == '1') {
+			messageOut[i] = ' ';
 
-			}
-			// this next else was the catch-all case which i deleted
-			// though maybe I shouldn't have?
-			/*else {
-				cout << "\n" << endl;
-			}*/
-			}
-		cout << "\n" << endl;
+		}
+		else { cout << ' '; }
+
+		cout << messageOut[i];
 	}
-	else {
-		cout << "\nApologies, something went wrong.\n" << endl;
-	};
+	cout << endl;
 }
 
 void _encode() {
