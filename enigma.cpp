@@ -25,8 +25,7 @@ void _write();
 void _opSelect();
 void _encrypt();
 void _decrypt();
-void _encode();
-void _decode();
+void _bunny();
 void _flushbuffer();
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,17 +52,14 @@ void  _opSelect() {
 		break;
 
 	case 3:
-		_encode();
-		break;
-
-	case 4:
-		_decode();
+		_bunny();
 		break;
 
 	default:
 		cout << "Invalid entry. Returning to Main.\n" << endl;
 		x = 0;
-
+		system("CLS");
+		_instructions();
 	}
 }
 
@@ -72,8 +68,7 @@ void _instructions() {
 	//Should this concept be menu driven? Give simple, clear, and concise instructions.
 	cout << "Welcome to the enigma.\n"
 		<< "Please select your operation with an integer:\n\n"
-		<< "[ 1 ] - encrypt typed message, [ 2 ] - decrypt typed message,\n"
-		<< "[ 3 ] - load encoded message from .txt file, [ 4 ] - submit encoded message to .txt file.\n" << endl;		//I've decided to go ahead and make this a menu driven system.
+		<< "[ 1 ] - encrypt typed message, [ 2 ] - decrypt typed message\n" << endl;		//I've decided to go ahead and make this a menu driven system.
 	cin >> x;
 	_opSelect();
 }
@@ -84,7 +79,7 @@ void _instructions() {
 //
 //	}
 
-/* void _read() {
+ void _read() {
 system("CLS");
 string line;
 ifstream myfile("0.txt");
@@ -101,7 +96,7 @@ else { cout << "Unable to open file."; }	//If file doesn't exist or can't be ope
 
 return;
 }
-*/
+
 
 void  _write() {
 	system("CLS");
@@ -115,22 +110,20 @@ void  _write() {
 }
 
 void _encrypt() {
+	_flushbuffer();
 	system("CLS");
 	string message;
-	int userin = 0;
+	bool userin = 0;
 	char messageArray[256];
 	double messageOut[256];
-
-	_flushbuffer();
 
 	cout << "Please type the message you would like to be encrypted on the next line and press [enter] when you're done.\n"
 		<< ">  ";
 	getline(cin, message);
 
-	_flushbuffer();
-
 	cout << "Message recorded:  " << message << "\n" << endl;
-	cout << "Is this correct?\n1 - yes\n2 - no\n>";
+	_flushbuffer();
+	cout << "Is this correct?\n1 - yes\n0 - no\n>";
 	cin >> userin;
 
 	system("CLS");
@@ -275,165 +268,180 @@ void _encrypt() {
 	}
 }
 
-void _decrypt() {
+void _bunny() {
+	system("CLS");
 
-	char encryptedMessage[256] = { 0 };
-	char messageOut[256] = { 0 };
-	string message;
-	_flushbuffer();
-
-	char question1[] = "Please type the message you would like to be decrypted on the next line and press [enter] when you're done. ";
-	string question2 = "What's the airspeed velocity of an African swallow? ";
-	cout << question1;
-	cin >> message;
-	cout << question2;
-	cin >> encryptedMessage;
-	cout << "Righty-o, we had better brush up on our Monty Python then." << endl;
-	cout << "          (\   /)" << endl;
+	cout << "          (\\   /)" << endl;
 	cout << "         (^  .  ^)" << endl;
 	cout << "            V V     " << endl;
 	cout << "        (||)  (||)" << endl;
 	cout << "                  " << endl;
 	cout << endl;
-	cout << "So this is your original message: " << message << endl;
-	cout << endl;
-	cout << "and this is your encrypted message: " << endl;
 
-	for (int i = 0; i < message.length() - 1; i += 2) {
+}
+void _decrypt() {
+	system("CLS");
 
-		if (message[i] == '4' && message[i + 1] == '1') {
+	char decryptedMessage[256] = { 0 }, messageOut[256] = { 0 };
+	string encryptedMessage, question1 = "Please type the message you would like to be decrypted on the next line and press [enter] when you're done.\n> ";
+	
+	_flushbuffer();
+
+	cout << question1;
+		cin >> encryptedMessage;
+	cout << "\nThis is your original message: " << encryptedMessage << endl;
+	cout << "\nAnd this is your decrypted message (as a string): ";	//This statement is actually going to display the result of messageOut[i] after the completion of the for loop
+
+	for (int i = 0; i < encryptedMessage.length() - 1; i += 2) {
+
+		if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '1') {
 			messageOut[i] = 'a';
 		}
-		else if (message[i] == '4' && message[i + 1] == '2') {
+		else if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '2') {
 			messageOut[i] = 'b';
 		}
-		else if (message[i] == '4' && message[i + 1] == '3') {
+		else if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '3') {
 			messageOut[i] = 'c';
 
 		}
-		else if (message[i] == '4' && message[i + 1] == '4') {
+		else if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '4') {
 			messageOut[i] = 'd';
 
 		}
-		else if (message[i] == '4' && message[i + 1] == '5') {
+		else if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '5') {
 			messageOut[i] = 'e';
 
 		}
-		else if (message[i] == '4' && message[i + 1] == '6') {
+		else if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '6') {
 			messageOut[i] = 'f';
 
 		}
-		else if (message[i] == '4' && message[i + 1] == '7') {
+		else if (encryptedMessage[i] == '4' && encryptedMessage[i + 1] == '7') {
 			messageOut[i] = 'g';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '7') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '7') {
 			messageOut[i] = 'h';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '8') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '8') {
 			messageOut[i] = 'i';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '0') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '0') {
 			messageOut[i] = 'j';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '1') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '1') {
 			messageOut[i] = 'k';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '2') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '2') {
 			messageOut[i] = 'l';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '3') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '3') {
 			messageOut[i] = 'm';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '4') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '4') {
 			messageOut[i] = 'n';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '5') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '5') {
 			messageOut[i] = 'o';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '6') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '6') {
 			messageOut[i] = 'p';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '7') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '7') {
 			messageOut[i] = 'q';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '8') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '8') {
 			messageOut[i] = 'r';
 
 		}
-		else if (message[i] == '1' && message[i + 1] == '9') {
+		else if (encryptedMessage[i] == '1' && encryptedMessage[i + 1] == '9') {
 			messageOut[i] = 's';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '0') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '0') {
 			messageOut[i] = 't';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '1') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '1') {
 			messageOut[i] = 'u';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '2') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '2') {
 			messageOut[i] = 'v';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '3') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '3') {
 			messageOut[i] = 'w';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '4') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '4') {
 			messageOut[i] = 'x';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '5') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '5') {
 			messageOut[i] = 'y';
 
 		}
-		else if (message[i] == '2' && message[i + 1] == '6') {
+		else if (encryptedMessage[i] == '2' && encryptedMessage[i + 1] == '6') {
 			messageOut[i] = 'z';
 
 		}
-		else if (message[i] == '5' && message[i + 1] == '1') {
-			messageOut[i] = ' ';
+		else if (encryptedMessage[i] == '5' && encryptedMessage[i + 1] == '1') {
+			messageOut[i] = '_';
 
 		}
 		else { cout << ' '; }
 
 		cout << messageOut[i];
-	}
-	cout << endl;
-}
-
-void _encode() {
-	int ret = 0;
-
-	_flushbuffer;
-	cout << "Someday I'll be encoding stuff!\n" << endl;
-	_write();
-
-	cout << "Return to menu [1] or exit[any]" << endl;
-	if (cin >> ret) {				//Have to do work here  - all values seem to simply return with the sys('pause')
-		_instructions;
 
 	}
-	else {
-		cout << "Goodbye.\n" << endl;
+	
+	cout << "\n\nCopying string into decrypted message (char array)" << endl;			//This bit right here converts our string into a character array called decryptedMessage[] for manipulations later on in v2.0
+	cout << "> ";
+	
+	ofstream myfile;
+	myfile.open("0.txt");
+
+	for (int i = 0; i < encryptedMessage.length() - 1; i++) {
+	
+		decryptedMessage[i] = messageOut[i];
+		
+		cout << decryptedMessage[i];
+		myfile << decryptedMessage[i];
 	}
+
+	myfile.close();
+	cout << "\n\nFile Write Completed.\n" << endl;
 }
 
-void _decode() {
-	cout << "Someday I'll be decoding stuff!\n" << endl;
-}
+//void _encode() {
+//	system("CLS");
+//	int ret = 0;
+//
+//	_flushbuffer();
+//	cout << "Someday I'll be encoding stuff!\n" << endl;
+//	_write();
+//
+//	cout << "Return to menu [1] or exit[any]" << endl;
+//	if (cin >> ret) {				//Have to do work here  - all values seem to simply return with the sys('pause')
+//		_instructions();
+//
+//	}
+//	else {
+//		cout << "Goodbye.\n" << endl;
+//	}
+//}
+
 
 void _flushbuffer() {
 	cin.clear();
