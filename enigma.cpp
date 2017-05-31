@@ -16,6 +16,7 @@ Proto_1 - in progress
 
 // Global ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 int x = 0;
+unsigned int microseconds;
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //  Functions ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -118,8 +119,8 @@ void _encrypt() {
 	system("CLS");
 	string message;
 	int userin = 0;
-	char messageArray[256];
-	double messageOut[256];
+	char messageArray[4096];
+	double messageOut[4096];
 
 	_flushbuffer();
 
@@ -277,28 +278,33 @@ void _encrypt() {
 
 void _decrypt() {
 
-	char encryptedMessage[256] = { 0 };
-	char messageOut[256] = { 0 };
+	char encryptedMessage[4096] = { 0 };
+	char messageOut[4096] = { 0 };
 	string message;
 	_flushbuffer();
 
 	char question1[] = "Please type the message you would like to be decrypted on the next line and press [enter] when you're done. ";
-	string question2 = "What's the airspeed velocity of an African swallow? ";
 	cout << question1;
 	cin >> message;
-	cout << question2;
-	cin >> encryptedMessage;
-	cout << "Righty-o, we had better brush up on our Monty Python then." << endl;
-	cout << "          (\   /)" << endl;
+	cout << "*****************************************************************************";
+	cout << "\n";
+	cout << "I say, do brush up on Monty Python while I decrypt..\n" << endl;
+	cout << " Oh, sure, it's JUST a harmless little bunny..\n";
+	cout << "  Bloody Peasant!!\n";
+	cout << "   Oh! Come and see the violence inherent in the system! Help, help, I'm being repressed! \n";
+	cout << "    Look at the BONES!!";
+	cout << "\n";
+	cout << "\n";
+	cout << "          (\\   /)" << endl;
 	cout << "         (^  .  ^)" << endl;
 	cout << "            V V     " << endl;
 	cout << "        (||)  (||)" << endl;
 	cout << "                  " << endl;
-	cout << endl;
-	cout << "So this is your original message: " << message << endl;
-	cout << endl;
-	cout << "and this is your encrypted message: " << endl;
-
+//	cout << "Righty-o, so this is your original message: \n" << message << endl;
+	cout << "Righty-o, this is your decrypted message:" << endl;
+	cout << "\n";
+	cout << "*****************************************************************************";
+	cout << "\n";
 	for (int i = 0; i < message.length() - 1; i += 2) {
 
 		if (message[i] == '4' && message[i + 1] == '1') {
